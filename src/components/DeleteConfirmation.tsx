@@ -5,9 +5,10 @@ interface DeleteConfirmationProps {
   taskTitle: string;
   onConfirm: () => void;
   onCancel: () => void;
+  isLoading?: boolean
 }
 
-export function DeleteConfirmation({ taskTitle, onConfirm, onCancel }: DeleteConfirmationProps) {
+export function DeleteConfirmation({ taskTitle, onConfirm, onCancel, isLoading }: DeleteConfirmationProps) {
   return (
     <div
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
@@ -36,13 +37,15 @@ export function DeleteConfirmation({ taskTitle, onConfirm, onCancel }: DeleteCon
           <div className="flex gap-3">
             <button
               onClick={onConfirm}
-              className="flex-1 bg-red-600 text-white py-3 rounded-lg font-medium hover:bg-red-700 transition-colors"
+              disabled={isLoading}
+              className={`flex-1 bg-red-600 text-white py-3 rounded-lg font-medium hover:bg-red-700 transition-colors ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
-              Delete Task
+              {isLoading ? 'Deleting...' : 'Delete Task'}
             </button>
             <button
               onClick={onCancel}
-              className="flex-1 border border-gray-300 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+              disabled={isLoading}
+              className={`flex-1 border border-gray-300 py-3 rounded-lg font-medium hover:bg-gray-50 transition-colors ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
             >
               Cancel
             </button>

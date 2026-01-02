@@ -32,6 +32,7 @@ export function Dashboard() {
   const [priorityFilter, setPriorityFilter] = useState<string>('all');
   const [tasksPerPage, setTasksPerPage] = useState(10);
   const [updatingStatusTask, setUpdatingStatusTask] = useState<Task | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
 
 
@@ -92,7 +93,7 @@ export function Dashboard() {
 
   const handleDeleteTask = async () => {
     if (!deletingTaskId) return;
-
+    setIsDeleting(true);
     try {
       const { error } = await api.tasks.delete(deletingTaskId);
       if (error) throw error;
@@ -104,6 +105,9 @@ export function Dashboard() {
       setDeletingTaskId(null);
     } catch (error) {
       console.error('Error deleting task:', error);
+    }
+    finally {
+      setIsDeleting(false);
     }
   };
 
@@ -393,6 +397,7 @@ export function Dashboard() {
           taskTitle={tasks.find((t) => t.id === deletingTaskId)?.title || ''}
           onConfirm={handleDeleteTask}
           onCancel={() => setDeletingTaskId(null)}
+          isLoading={isDeleting}
         />
       )}
     </div>
