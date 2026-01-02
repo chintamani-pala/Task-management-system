@@ -72,6 +72,28 @@ The application requires a MongoDB database and a Node.js server.
 - **Icons**: Lucide React
 - **Build Tool**: Vite
 
+## API Endpoints
+
+### Authentication (`/api/auth`)
+
+- `POST /signup`: Register a new user
+- `POST /signin`: Login existing user
+- `GET /me`: Get current authenticated user
+
+### Tasks (`/api/tasks`)
+
+- `GET /`: Get all tasks (Supports pagination & filtering)
+  - Query params: `page`, `limit`, `status`, `priority`
+- `POST /`: Create a new task
+- `PATCH /:id`: Update an existing task
+- `DELETE /:id`: Delete a task
+
+### Settings (`/api/settings`)
+
+- `GET /`: Get user settings (statuses & priorities)
+- `PUT /`: Update user settings
+
+
 ## Database Schema (MongoDB)
 
 ### Tasks Collection
@@ -82,7 +104,6 @@ The application requires a MongoDB database and a Node.js server.
 - `status`: String ('pending' | 'completed')
 - `priority`: String ('low' | 'medium' | 'high')
 - `created_by`: ObjectId (User reference)
-- `assigned_to`: ObjectId (User reference)
 - `created_at`: Date
 - `updated_at`: Date
 
@@ -91,3 +112,6 @@ The application requires a MongoDB database and a Node.js server.
 - `email`: String (unique)
 - `password`: String (hashed)
 - `createdAt`: Date
+- `settings`: Object
+  - `statuses`: Array of objects (`label`, `value`, `color`)
+  - `priorities`: Array of objects (`label`, `value`, `color`)
